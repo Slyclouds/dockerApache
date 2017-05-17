@@ -8,8 +8,6 @@ RUN \
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 775 /var/www/html
 
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-
 RUN \
 	a2enmod proxy_fcgi && \
 	rm -f /var/run/apache2/httpd.pid && \
