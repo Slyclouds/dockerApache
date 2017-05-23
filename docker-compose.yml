@@ -1,0 +1,29 @@
+percona:
+    build: dockerPercona
+    expose:
+        - 3306
+    environment:
+        - PERCONA_VERSION=5.7
+
+php:
+    build: php
+    expose:
+        - 9007
+    environment:
+        - PHP_VERSION=7.0.19
+    links:
+        - percona
+    volumes:
+        - ./php-fpm.log:/var/log/php-fpm.log
+        - ./html:/var/www/html
+    
+apache:
+    build: apache
+    ports:
+        - 80:80
+        - 443:443
+    links:
+        - php
+    volumes:
+        - ./error.log:/var/log/apache2/error.log
+        - ./html:/var/www/html
